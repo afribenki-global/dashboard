@@ -17,17 +17,15 @@
 
   ## Tech Stack
 
-  | Layer                | Technology / Library                                  |
+  | Layer                | Technology / Library                                 |
   |----------------------|------------------------------------------------------|
   | UI Framework         | Vite + React                                         |
   | Language             | TypeScript                                           |
   | Styling              | CSS / Tailwind CSS                                   |
-  | State Management     | (e.g. Zustand, React Context)                        |
-  | Charting / Visualization | (e.g. Recharts)                                 |
-  | Build Tool           | Vite                                                |
+  | Build Tool           | Vite                                                 |
   | Deployment           | GitHub Pages / Static hosting                        |
 
-  (Adjust the above stack entries to match what your dashboard actually uses.)
+  
 
   ## Getting Started
 
@@ -95,8 +93,3 @@
   - Submit a pull request
 
   Please follow our code style / linting rules and include tests (if applicable).
-
-  ## License
-
-  This project is open source and available under the MIT License.
-  
