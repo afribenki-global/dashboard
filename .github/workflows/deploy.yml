@@ -46,12 +46,12 @@ jobs:
         run: npm run build -- --base="${{ steps.base.outputs.base }}"
 
       - name: SPA fallback (404.html)
-        run: cp build/index.html build/404.html
+        run: cp docs/index.html docs/404.html
 
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: build
+          path: docs
 
   deploy:
     environment:
