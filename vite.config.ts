@@ -4,8 +4,8 @@ import path from 'path';
 
 export default defineConfig({
   plugins: [react()],
-  // Use relative paths so the app works when hosted from a subpath (GitHub Pages)
-  base: './',
+  // Set base to repo name for GitHub Pages deployment
+  base: '/dashboard/',
   resolve: {
     extensions: ['.js', '.jsx', '.ts', '.tsx', '.json'],
     alias: {
