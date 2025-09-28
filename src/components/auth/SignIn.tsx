@@ -1,3 +1,4 @@
+
 import React, { useState } from 'react';
 import { Button } from '../ui/button';
 import { Input } from '../ui/input';
@@ -14,7 +15,7 @@ interface SignInProps {
 
 export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
   const [formData, setFormData] = useState({
-    email: '',
+    username: '',
     password: ''
   });
   const [error, setError] = useState('');
@@ -26,35 +27,37 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    
-    if (!formData.email || !formData.password) {
+    if (!formData.username || !formData.password) {
       setError('Please fill in all fields');
       return;
     }
-
-    // Check against localStorage
+    // Check against localStorage (registered user)
     const savedUser = localStorage.getItem('benki_user');
     if (savedUser) {
       const userData = JSON.parse(savedUser);
-      if (userData.email === formData.email && userData.password === formData.password) {
+      if ((userData.username === formData.username || userData.email === formData.username) && userData.password === formData.password) {
         onLogin(userData);
         return;
       }
     }
-    
-    setError('Invalid email or password');
+    // Check against default user
+    const defaultUser = localStorage.getItem('benki_default_user');
+    if (defaultUser) {
+      const userData = JSON.parse(defaultUser);
+      if ((userData.username === formData.username || userData.email === formData.username) && userData.password === formData.password) {
+        onLogin(userData);
+        return;
+      }
+    }
+    setError('Invalid username or password');
   };
 
   const handleSocialLogin = async (provider: 'google' | 'facebook' | 'github') => {
     try {
-      // Show loading state
       toast.loading(`Signing in with ${provider}...`);
-      
-      // Simulate social login process
       await new Promise(resolve => setTimeout(resolve, 2000));
-      
-      // Create mock user data for social login
       const socialUser = {
+        username: `user@${provider}.com`,
         email: `user@${provider}.com`,
         name: `${provider.charAt(0).toUpperCase() + provider.slice(1)} User`,
         provider: provider,
@@ -62,10 +65,7 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
         country: 'Nigeria',
         signInMethod: 'social'
       };
-      
-      // Store user data
       localStorage.setItem('benki_user', JSON.stringify(socialUser));
-      
       toast.dismiss();
       toast.success(`Successfully signed in with ${provider}!`);
       onLogin(socialUser);
@@ -93,22 +93,25 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
             <CardDescription>
               Access your AI-powered wealth dashboard
             </CardDescription>
+            <div className="mt-4 p-3 bg-blue-50 border border-blue-200 rounded text-sm text-blue-900">
+              <strong>Demo Login:</strong><br />
+              Username: <span className="font-mono">user@gmail.com</span><br />
+              Password: <span className="font-mono">soonami</span>
+            </div>
           </CardHeader>
-          
           <CardContent>
             <form onSubmit={handleSubmit} className="space-y-4">
               <div>
-                <Label htmlFor="email">Email</Label>
+                <Label htmlFor="username">Username</Label>
                 <Input
-                  id="email"
-                  type="email"
-                  value={formData.email}
-                  onChange={(e) => handleInputChange('email', e.target.value)}
-                  placeholder="your.email@example.com"
+                  id="username"
+                  type="text"
+                  value={formData.username}
+                  onChange={(e) => handleInputChange('username', e.target.value)}
+                  placeholder="user@gmail.com"
                   className="border-green-200 focus:border-green-400"
                 />
               </div>
-
               <div>
                 <Label htmlFor="password">Password</Label>
                 <Input
@@ -120,13 +123,11 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
                   className="border-green-200 focus:border-green-400"
                 />
               </div>
-
               {error && (
                 <div className="bg-red-50 border border-red-200 rounded-md p-3">
                   <p className="text-red-600 text-sm">{error}</p>
                 </div>
               )}
-
               <Button 
                 type="submit" 
                 className="w-full bg-blue-600 hover:bg-blue-700 text-white"
@@ -134,7 +135,6 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
                 Sign In
               </Button>
             </form>
-
             {/* Social Login Section */}
             <div className="mt-6">
               <div className="relative">
@@ -147,7 +147,6 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
                   </span>
                 </div>
               </div>
-
               <div className="grid grid-cols-3 gap-3 mt-6">
                 <Button
                   variant="outline"
@@ -173,7 +172,6 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
               </div>
             </div>
           </CardContent>
-
           <CardFooter className="justify-center">
             <p className="text-sm text-gray-600">
               New here?{' '}
@@ -186,7 +184,6 @@ export function SignIn({ onLogin, onSwitchToSignUp }: SignInProps) {
             </p>
           </CardFooter>
         </Card>
-
         <div className="text-center mt-6 text-sm text-gray-500">
           Powered by AfriBenki - Democratizing wealth for Africa's youth
         </div>

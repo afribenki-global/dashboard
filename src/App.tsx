@@ -7,13 +7,26 @@ import { NotificationManager } from './components/notifications/NotificationMana
 import { Toaster } from './components/ui/sonner';
 import { ErrorBoundary } from './components/common/ErrorBoundary';
 
+
 export default function App() {
   const [currentPage, setCurrentPage] = useState<'signin' | 'signup' | 'dashboard'>('signin');
   const [user, setUser] = useState<any>(null);
 
+  // Ensure default user exists in localStorage
   useEffect(() => {
-    // Check if user is logged in
+    const defaultUser = {
+      username: 'user@gmail.com',
+      email: 'user@gmail.com',
+      password: 'soonami',
+      name: 'User',
+      provider: 'default',
+    };
     const savedUser = localStorage.getItem('benki_user');
+    const defaultUserExists = localStorage.getItem('benki_default_user');
+    if (!defaultUserExists) {
+      localStorage.setItem('benki_default_user', JSON.stringify(defaultUser));
+    }
+    // Check if user is logged in
     if (savedUser) {
       setUser(JSON.parse(savedUser));
       setCurrentPage('dashboard');

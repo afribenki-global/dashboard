@@ -27,7 +27,17 @@
 
   
 
-  ## Getting Started
+
+## Default Login
+
+You can log in to the dashboard using the following credentials (no registration required):
+
+- **Username:** user@gmail.com
+- **Password:** soonami
+
+---
+
+## Getting Started
 
   Clone the repository:
 
