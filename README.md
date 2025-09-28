@@ -34,7 +34,7 @@ You can log in to the dashboard using the following credentials (no registration
 
 - **Username:** user@gmail.com
 - **Password:** soonami
-
+*** With the recent update, the build is refusing to update the login information. Registration is easy and flexible, with no stress.
 ---
 
 ## Getting Started
