@@ -36,7 +36,7 @@ You can log in to the dashboard using the following credentials (no registration
 - **Password:** soonami
 
 
-> _Note: The above login information is hardcoded for demo purposes. No registration is required; simply use these credentials to access the dashboard._
+> _
 
 ![Demo Login Screenshot](public/login-demo.png)
 
